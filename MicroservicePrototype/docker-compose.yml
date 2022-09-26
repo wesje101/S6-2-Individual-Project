@@ -2,7 +2,14 @@ version: '3.4'
 
 services:
   microserviceprototype:
-    image: ${DOCKER_REGISTRY-}microserviceprototype
+    container_name: microserviceprototype
+    restart: always
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: "Dockerfile"
+  consumer:
+    container_name: consumer
+    restart: always
+    build:
+      context: ./Consumer
+      dockerfile: "Dockerfile"
