@@ -7,7 +7,7 @@ public class Send
 {
     public static void SendMessage()
     {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
+        var factory = new ConnectionFactory() { HostName = "rabbitmq" };
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {
@@ -26,7 +26,5 @@ public class Send
                 body: body);
             Console.WriteLine(" [x] Sent {0}", message);
         }
-        
-        Console.WriteLine(" Press [enter] to exit");
     }
 }
