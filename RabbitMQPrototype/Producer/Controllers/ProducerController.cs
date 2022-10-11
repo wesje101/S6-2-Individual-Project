@@ -4,7 +4,7 @@ namespace Producer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class ProducerController : ControllerBase
 {
     [HttpGet(Name = "GetWeatherForecast")]
     public IActionResult Get()

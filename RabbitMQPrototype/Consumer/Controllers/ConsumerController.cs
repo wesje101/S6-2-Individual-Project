@@ -4,7 +4,7 @@ namespace Consumer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class ConsumerController : ControllerBase
 {
     [HttpGet(Name = "ConsumeMessage")]
     public IActionResult Get()

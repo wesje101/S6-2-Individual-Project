@@ -8,19 +8,27 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-  producer:
-    container_name: producer
+  newtask:
+    container_name: newtask
     restart: always
     build:
-      context: "./Producer"
+      context: "./NewTask"
       dockerfile: "Dockerfile"
     ports:
-      - "8091:80"
-  consumer:
-    container_name: consumer
+      - "8092:80"
+  worker1:
+    container_name: worker1
     restart: always
     build:
-      context: "./Consumer"
+      context: "./Worker"
       dockerfile: "Dockerfile"
     ports:
-      - "8090:80"
+      - "8093:80"
+  worker2:
+    container_name: worker2
+    restart: always
+    build:
+      context: "./Worker"
+      dockerfile: "Dockerfile"
+    ports:
+      - "8094:80"
