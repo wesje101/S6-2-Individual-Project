@@ -1,24 +1,21 @@
 ﻿namespace AccountService.Models;
 
-public class User
+public class Account
 {
-    public User(string name)
+    public Account(int id, string name)
     {
-        this._name = name;
+        this.id = id;
+        this.name = name;
     }
-    
-    private readonly string _name;
+
+    public int id;
+    public string name;
 
     
     //TODO replace with database
-    private readonly List<User> _placeholderFriendList = new List<User>();
+    private readonly List<Account> _placeholderFriendList = new List<Account>();
 
-    public string GetName()
-    {
-        return _name;
-    }
-
-    public void AddFriend(User friend)
+    public void AddFriend(Account friend)
     {
         if (!_placeholderFriendList.Contains(friend))
         {
@@ -26,7 +23,7 @@ public class User
         }
     }
 
-    public void RemoveFriend(User friend)
+    public void RemoveFriend(Account friend)
     {
         if (_placeholderFriendList.Contains(friend))
         {

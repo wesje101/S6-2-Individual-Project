@@ -8,6 +8,19 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8099:8080"
+  accountservice_db:
+    container_name: accountservice_db
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: account
+    ports:
+      - "8100:5432"
   accountservice:
     container_name: accountservice
     restart: always

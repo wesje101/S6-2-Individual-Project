@@ -1,8 +1,15 @@
+using AccountService.DAL;
 using AccountService.Messaging;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+string connectionString = builder.Configuration.GetConnectionString("PostgressConnectionString");
+builder.Services.AddDbContext<AccountContext>(options => options.UseNpgsql(
+    connectionString,
+    x => x.MigrationsAssembly("AccountService")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
