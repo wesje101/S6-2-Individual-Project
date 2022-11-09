@@ -3,7 +3,6 @@ using AccountService.Models.Interfaces;
 
 namespace AccountService;
 
-using System.Linq;
 public class AccountLogic : IAccountLogic
 {
    
@@ -29,7 +28,7 @@ public class AccountLogic : IAccountLogic
         var foundUser = GetAccount(id);
         var foundFriend = GetAccount(friendId);
         
-        if (foundUser == null || foundFriend == null) return foundUser;
+       if (foundUser == null || foundFriend == null) return foundUser;
         foundUser.RemoveFriend(foundFriend);
         return foundUser;
     }
@@ -42,12 +41,12 @@ public class AccountLogic : IAccountLogic
         if (foundUser == null || foundFriend == null) return foundUser;
         foundUser.AddFriend(foundFriend);
         return foundUser;
-
+    
     }
     
     public Account? RemoveFriend(string name, string friendName)
     {
-
+    
         var foundUser = GetAccount(name);
         var foundFriend = GetAccount(friendName);
         

@@ -13,17 +13,15 @@ public class MessageBusListener : BackgroundService
     private readonly IConfiguration _configuration;
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<MessageBusListener> _logger;
-    private readonly IAccountLogic _logic;
     private IConnection _connection;
     private IModel _channel;
     private string _queueName;
     
-    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory, IAccountLogic logic ,ILogger<MessageBusListener> logger)
+    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory ,ILogger<MessageBusListener> logger)
     {
         _configuration = configuration;
         _scopeFactory = scopeFactory;
         _logger = logger;
-        _logic = logic;
 
         var factory = new ConnectionFactory() { HostName = _configuration["RabbitMQ:Host"] };
         _connection = factory.CreateConnection();
@@ -73,8 +71,13 @@ public class MessageBusListener : BackgroundService
                 _logger.LogInformation("username null: {usernameState}", receivedUser.Username == null);
                 if (receivedUser?.Username != null)
                 {
-                    _logger.LogInformation("Adding user");
-                    _logic.AddAccount(new Account(receivedUser.Id ,receivedUser.Username));
+                    using (var scope = _scopeFactory.CreateScope())
+                    {
+                        _logger.LogInformation("Accessing Logic");
+                        var logic = scope.ServiceProvider.GetRequiredService<IAccountLogic>();
+                        _logger.LogInformation("Adding user");
+                        logic.AddAccount(new Account(receivedUser.Id ,receivedUser.Username));
+                    }
                 }
                 break;
             default:

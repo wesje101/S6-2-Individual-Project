@@ -1,5 +1,7 @@
+using AccountService;
 using AccountService.DAL;
 using AccountService.Messaging;
+using AccountService.Models.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IAccountLogic, AccountLogic>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddHostedService<MessageBusListener>();
 
 var app = builder.Build();
