@@ -8,31 +8,31 @@ namespace ModerationService.Controllers;
 public class ModerationController : ControllerBase
 {
 
-    [HttpGet(Name = "GetReports")]
+    [HttpGet("~/GetReports",Name = "GetReports")]
     public IActionResult GetReports()
     {
         return BadRequest();
     }
 
-    [HttpGet(Name = "GetReportsByUser")]
+    [HttpPost("~/GetReportsByUser",Name = "GetReportsByUser")]
     public IActionResult GetReportsByUser(User user)
     {
         return BadRequest();
     }
 
-    [HttpPost(Name = "CloseReport")]
+    [HttpPost("~/CloseReport",Name = "CloseReport")]
     public IActionResult CloseReport(Report report)
     {
         return BadRequest();
     }
 
-    [HttpPost(Name = "HideMessage")]
+    [HttpPost("~/HideMessage",Name = "HideMessage")]
     public IActionResult HideMessage(ChatMessage message)
     {
         return BadRequest();
     }
 
-    [HttpPost(Name = "BanUser")]
+    [HttpPost("~/BanUser",Name = "BanUser")]
     public IActionResult BanUser(User user)
     {
         return BadRequest();

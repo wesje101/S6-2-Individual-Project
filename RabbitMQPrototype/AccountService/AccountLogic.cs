@@ -5,39 +5,20 @@ namespace AccountService;
 using System.Linq;
 public class AccountLogic
 {
+    public static readonly AccountLogic logic = new AccountLogic();
+    
     //TODO Replace with database
     private readonly List<User> _placeholderUserList = new List<User>();
-
-    public AccountLogic()
-    {
-        
-    }
     
-    //TODO Authentication methods should move to AuthService
-    public bool SignIn(string username, string password)
+    public bool AddUser(string username)
     {
-        var foundUser = _placeholderUserList.FirstOrDefault(i => i.GetName() == username);
-
-        return foundUser != null && foundUser.GetPassword() == password;
-    }
-    
-    public bool SignOut()
-    {
-        return false;
-    }
-    
-    public bool Register(string username, string password)
-    {
-        var foundUser = _placeholderUserList.FirstOrDefault(i => i.GetName() == username);
-
-        if (foundUser == null)
+        if (_placeholderUserList.FirstOrDefault(i => i.GetName() == username) != null)
         {
-            _placeholderUserList.Add(new User(username, password));
-            SignIn(username, password);
-            return true;
+            return false;
         }
-        return false;
-
+        _placeholderUserList.Add(new User(username));
+        Console.WriteLine($"Added user: {username}");
+        return true;
     }
     
     public bool AddFriend(string username, string friendname)

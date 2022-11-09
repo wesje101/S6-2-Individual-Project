@@ -8,27 +8,35 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-  newtask:
-    container_name: newtask
+  accountservice:
+    container_name: accountservice
     restart: always
     build:
-      context: "./NewTask"
+      context: "./AccountService"
       dockerfile: "Dockerfile"
     ports:
-      - "8092:80"
-  worker1:
-    container_name: worker1
+      - "8095:80"
+  authservice:
+    container_name: authservice
     restart: always
     build:
-      context: "./Worker"
+      context: "./AuthService"
       dockerfile: "Dockerfile"
     ports:
-      - "8093:80"
-  worker2:
-    container_name: worker2
+      - "8096:80"
+  chatservice:
+    container_name: chatservice
     restart: always
     build:
-      context: "./Worker"
+      context: "./ChatService"
       dockerfile: "Dockerfile"
     ports:
-      - "8094:80"
+      - "8097:80"
+  moderationservice:
+    container_name: moderationservice
+    restart: always
+    build:
+      context: "./ModerationService"
+      dockerfile: "Dockerfile"
+    ports:
+      - "8098:80"

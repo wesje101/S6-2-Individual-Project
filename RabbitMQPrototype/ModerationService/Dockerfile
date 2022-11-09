@@ -2,13 +2,15 @@
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV Logging__Console__FormatterName=simple
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ModerationService/ModerationService.csproj", "ModerationService/"]
-RUN dotnet restore "ModerationService/ModerationService.csproj"
+COPY ["ModerationService.csproj", "./"]
+RUN dotnet restore "ModerationService.csproj"
 COPY . .
-WORKDIR "/src/ModerationService"
+WORKDIR "/src/"
 RUN dotnet build "ModerationService.csproj" -c Release -o /app/build
 
 FROM build AS publish

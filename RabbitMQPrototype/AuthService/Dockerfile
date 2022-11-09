@@ -2,13 +2,15 @@
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV Logging__Console__FormatterName=simple
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["AuthService/AuthService.csproj", "AuthService/"]
-RUN dotnet restore "AuthService/AuthService.csproj"
+COPY ["AuthService.csproj", "./"]
+RUN dotnet restore "AuthService.csproj"
 COPY . .
-WORKDIR "/src/AuthService"
+WORKDIR "/src/"
 RUN dotnet build "AuthService.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -2,13 +2,15 @@
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV Logging__Console__FormatterName=simple
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ChatService/ChatService.csproj", "ChatService/"]
-RUN dotnet restore "ChatService/ChatService.csproj"
+COPY ["ChatService.csproj", "./"]
+RUN dotnet restore "ChatService.csproj"
 COPY . .
-WORKDIR "/src/ChatService"
+WORKDIR "/src/"
 RUN dotnet build "ChatService.csproj" -c Release -o /app/build
 
 FROM build AS publish

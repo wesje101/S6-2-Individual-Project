@@ -9,7 +9,7 @@ public class ChatController : ControllerBase
 {
     private readonly ChatLogic _logic = new ChatLogic();
     
-    [HttpPost(Name = "JoinChatRoomByRoomName")]
+    [HttpPost("JoinChatRoomByRoomName",Name = "JoinChatRoomByRoomName")]
     public IActionResult JoinChatRoomByName(User user, string roomName)
     {
         if (_logic.JoinChatRoomByName(user, roomName))
@@ -20,7 +20,7 @@ public class ChatController : ControllerBase
         return NotFound();
     }
     
-    [HttpPost(Name = "LeaveChatRoomByRoomName")]
+    [HttpPost("LeaveChatRoomByRoomName",Name = "LeaveChatRoomByRoomName")]
     public IActionResult LeaveChatRoomByName(User user, string roomName)
     {
         if (_logic.LeaveChatRoomByName(user, roomName))
@@ -31,8 +31,8 @@ public class ChatController : ControllerBase
         return NotFound();
     }
 
-    [HttpPost(Name = "SendChatMessage")]
-    public IActionResult SendChatMessage(User user, string roomName, ChatMessage message)
+    [HttpPost("SendChatMessage",Name = "SendChatMessage")]
+    public IActionResult SendChatMessage(User user, string roomName, string message)
     {
         if (_logic.SendChatMessage(user, roomName, message))
         {

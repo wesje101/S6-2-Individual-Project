@@ -46,7 +46,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Docker.Docker_Compose_newtask">
+  <component name="RunManager" selected="Docker.Docker_Compose">
     <configuration name="AccountService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/AccountService/AccountService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -349,7 +349,10 @@
       <workItem from="1663842093481" duration="4069000" />
       <workItem from="1664178234458" duration="1639000" />
       <workItem from="1664181343277" duration="2472000" />
-      <workItem from="1664783912972" duration="32487000" />
+      <workItem from="1664783912972" duration="36165000" />
+      <workItem from="1666255121112" duration="3672000" />
+      <workItem from="1667465936218" duration="1352000" />
+      <workItem from="1667467368916" duration="15594000" />
     </task>
     <servers />
   </component>

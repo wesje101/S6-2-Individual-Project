@@ -20,10 +20,14 @@ public class ChatLogic
         return foundRoom != null && foundRoom.LeaveRoom(user);
     }
 
-    public bool SendChatMessage(User user, string roomName, ChatMessage message)
+    public bool SendChatMessage(User user, string roomName, string message)
     {
         var foundRoom = _chatrooms.FirstOrDefault(i => i.GetRoomName() == roomName);
 
-        return foundRoom != null && foundRoom.SendMessage(user, message);
+        if (foundRoom == null) return false;
+        ChatMessage chatMessage = new ChatMessage(message, foundRoom, DateTime.Now);
+        
+        return foundRoom.SendMessage(user, chatMessage);
+
     }
 }
