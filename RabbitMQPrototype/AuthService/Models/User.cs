@@ -8,10 +8,13 @@ public class User
 {
     public User(string name, string password)
     {
-        this._name = name;
-        this._password = password;
+        //TODO Create proper ID generation
+        _id = new Random().Next();
+        _name = name;
+        _password = password;
     }
-    
+
+    private readonly int _id;
     private readonly string _name;
     private readonly string _password;
     
@@ -25,8 +28,13 @@ public class User
         return _password;
     }
 
+    public int GetId()
+    {
+        return _id;
+    }
+
     public override string ToString()
     {
-        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User,GetName(), GetPassword()));
+        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User, GetId(),GetName(), GetPassword()));
     }
 }

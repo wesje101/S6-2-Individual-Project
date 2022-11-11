@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Text.Json;
 using AccountService.Messaging.MessagingDTOs;
+using AccountService.Models;
+using AccountService.Models.Interfaces;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -15,7 +17,7 @@ public class MessageBusListener : BackgroundService
     private IModel _channel;
     private string _queueName;
     
-    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory, ILogger<MessageBusListener> logger)
+    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory ,ILogger<MessageBusListener> logger)
     {
         _configuration = configuration;
         _scopeFactory = scopeFactory;
@@ -69,8 +71,13 @@ public class MessageBusListener : BackgroundService
                 _logger.LogInformation("username null: {usernameState}", receivedUser.Username == null);
                 if (receivedUser?.Username != null)
                 {
-                    _logger.LogInformation("Adding user");
-                    AccountLogic.logic.AddUser(receivedUser.Username);
+                    using (var scope = _scopeFactory.CreateScope())
+                    {
+                        _logger.LogInformation("Accessing Logic");
+                        var logic = scope.ServiceProvider.GetRequiredService<IAccountLogic>();
+                        _logger.LogInformation("Adding user");
+                        logic.AddAccount(new Account {id = receivedUser.Id, name = receivedUser.Username});
+                    }
                 }
                 break;
             default:
