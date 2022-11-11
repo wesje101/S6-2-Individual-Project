@@ -11,6 +11,7 @@ public class AccountRepository : IAccountRepository
     public AccountRepository(AccountContext context)
     {
         _context = context;
+        //TODO figure out migration
         context.Database.Migrate();
     }
     

@@ -1,3 +1,4 @@
+using AccountService.Models;
 using AccountService.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,19 @@ public class AccountController : ControllerBase
     {
         _logic.RemoveFriend(username, friendname);
         return Ok();
+    }
+
+    [HttpPost("~/AddUser",Name = "AddUser")]
+    public IActionResult AddUser(string username)
+    {
+        _logic.AddAccount(new Account { name = username });
+        return Ok();
+    }
+
+    [HttpGet("~/GetUsers", Name = "GetUsers")]
+    public IActionResult GetUsers()
+    {
+        return Ok(_logic.GetAccounts());
     }
     
     

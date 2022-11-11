@@ -19,7 +19,7 @@ public class AccountLogic : IAccountLogic
         var foundFriend = GetAccount(friendId);
         
         if (foundUser == null || foundFriend == null) return foundUser;
-        foundUser.AddFriend(foundFriend);
+        foundUser.FriendList.Add(foundFriend);
         return foundUser;
     }
 
@@ -29,7 +29,7 @@ public class AccountLogic : IAccountLogic
         var foundFriend = GetAccount(friendId);
         
        if (foundUser == null || foundFriend == null) return foundUser;
-        foundUser.RemoveFriend(foundFriend);
+        foundUser.FriendList.Remove(foundFriend);
         return foundUser;
     }
 
@@ -39,7 +39,7 @@ public class AccountLogic : IAccountLogic
         var foundFriend = GetAccount(friendName);
         
         if (foundUser == null || foundFriend == null) return foundUser;
-        foundUser.AddFriend(foundFriend);
+        foundUser.FriendList.Add(foundFriend);
         return foundUser;
     
     }
@@ -51,7 +51,7 @@ public class AccountLogic : IAccountLogic
         var foundFriend = GetAccount(friendName);
         
         if (foundUser == null || foundFriend == null) return foundUser;
-        foundUser.RemoveFriend(foundFriend);
+        foundUser.FriendList.Remove(foundFriend);
         return foundUser;
         
     }

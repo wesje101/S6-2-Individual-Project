@@ -1,34 +1,16 @@
-﻿namespace AccountService.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AccountService.Models;
 
 public class Account
 {
-    public Account(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-    }
+    [Key] 
+    public int id { get; set; }
 
-    public int id;
-    public string name;
-
+    [Required, StringLength(60, MinimumLength = 3)]
+    public string name { get; set; }
     
-    //TODO replace with database
-    private readonly List<Account> _placeholderFriendList = new List<Account>();
+    public List<Account> FriendList { get; set; }
 
-    public void AddFriend(Account friend)
-    {
-        if (!_placeholderFriendList.Contains(friend))
-        {
-            _placeholderFriendList.Add(friend);
-        }
-    }
 
-    public void RemoveFriend(Account friend)
-    {
-        if (_placeholderFriendList.Contains(friend))
-        {
-            _placeholderFriendList.Remove(friend);
-        }
-    }
-    
 }
