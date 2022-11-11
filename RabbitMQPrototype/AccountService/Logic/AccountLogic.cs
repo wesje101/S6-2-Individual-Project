@@ -63,6 +63,7 @@ public class AccountLogic : IAccountLogic
 
     public Account? GetAccount(string name)
     {
+        //TODO apparently this is not allowed, fix
         return _repository.GetAccount(name);
     }
 

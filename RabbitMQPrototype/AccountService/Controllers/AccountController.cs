@@ -41,6 +41,18 @@ public class AccountController : ControllerBase
     {
         return Ok(_logic.GetAccounts());
     }
+
+    [HttpGet("~/GetUserByID", Name = "GetUserByID")]
+    public IActionResult GetUser(int id)
+    {
+        return Ok(_logic.GetAccount(id));
+    }
+    
+    [HttpGet("~/GetUserByName", Name = "GetUserByName")]
+    public IActionResult GetUser(string name)
+    {
+        return Ok(_logic.GetAccount(name));
+    }
     
     
 }
