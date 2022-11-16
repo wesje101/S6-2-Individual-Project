@@ -53,11 +53,11 @@ services:
       dockerfile: "Dockerfile"
     ports:
       - "8098:80"
-  APIGateway:
+  apigateway:
     container_name: apigateway
     restart: always
     build:
       context: "./APIGateway"
       dockerfile: "Dockerfile"
     ports:
-      - "8100:80"
+      - "8101:80"
