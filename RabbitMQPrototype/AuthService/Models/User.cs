@@ -8,8 +8,6 @@ public class User
 {
     public User(string name, string password)
     {
-        //TODO Create proper ID generation
-        _id = new Random().Next();
         _name = name;
         _password = password;
     }
