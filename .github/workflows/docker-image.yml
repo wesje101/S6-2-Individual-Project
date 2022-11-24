@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build account service image
-      run: docker build .RabbitMQPrototype/AccountService --file RabbitMQPrototype/AccountService/Dockerfile --tag accountservice:$(date +%s)
+      run: docker build ./RabbitMQPrototype/AccountService --file Dockerfile --tag accountservice:$(date +%s)
