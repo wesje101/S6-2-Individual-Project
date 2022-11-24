@@ -1,0 +1,43 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Register?{username}&{password}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8096
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/GetUsers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8095
+        }
+      ],
+      "UpstreamPathTemplate": "/api/account",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/GetUserByID{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8095
+        }
+      ],
+      "UpstreamPathTemplate": "/api/account{id}",
+      "UpstreamHttpMethod": ["Get"]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8101"
+  }
+}
