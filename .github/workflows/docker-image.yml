@@ -17,3 +17,8 @@ jobs:
     - name: Build account service image
       working-directory: ./RabbitMQPrototype/AccountService 
       run: docker build . --file Dockerfile --tag accountservice:$(date +%s)
+    
+    - uses: actions/checkout@v3
+    - name: push account service image
+      working-directory: ./RabbitMQPrototype/AccountService
+      run: docker push wesje101/s6-2_personal_project:accountservice
