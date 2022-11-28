@@ -41,7 +41,14 @@ jobs:
         push: true
         tags: wesje101/s6-2_personal_project:authservice
         labels: ${{ steps.meta.output.labels }}
-        
+
+    - name: Build and publish API Gateway Docker image
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        context: ./RabbitMQPrototype/APIGateway
+        push: true
+        tags: wesje101/s6-2_personal_project:apigateway
+        labels: ${{ steps.meta.output.labels }}
     #- uses: actions/checkout@v3
     #- name: Build account service image
     #  working-directory: ./RabbitMQPrototype/AccountService 
