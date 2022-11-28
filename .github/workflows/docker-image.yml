@@ -31,8 +31,8 @@ jobs:
       with:
         context: ./RabbitMQPrototype/AccountService
         push: true
-        tags: accountservice
-        labels: ${{steps.meta.output.labels}}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.output.labels }}
         
     #- uses: actions/checkout@v3
     #- name: Build account service image
