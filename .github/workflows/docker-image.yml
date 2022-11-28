@@ -31,7 +31,7 @@ jobs:
       with:
         context: ./RabbitMQPrototype/AccountService
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: "accountservice"
         labels: ${{ steps.meta.output.labels }}
         
     #- uses: actions/checkout@v3
