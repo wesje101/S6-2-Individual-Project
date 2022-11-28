@@ -9,7 +9,6 @@ jobs:
   push_to_registry:
     name: Push Docker images to Docker Hub
     runs-on: ubuntu-latest
-    working-directory: ./RabbitMQPrototype/AccountService
     
     steps:
     - name: Check out the repo 
@@ -29,6 +28,7 @@ jobs:
         
     - name: Build and publish Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      working-directory: ./RabbitMQPrototype/AccountService
       with:
         context:
         push: true
