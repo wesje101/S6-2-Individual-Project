@@ -26,12 +26,20 @@ jobs:
       with:
         images: wesje101/s6-2_personal_project
         
-    - name: Build and publish Docker image
+    - name: Build and publish Account Service Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
         context: ./RabbitMQPrototype/AccountService
         push: true
         tags: wesje101/s6-2_personal_project:accountservice
+        labels: ${{ steps.meta.output.labels }}
+        
+    - name: Build and publish Auth Service Docker image
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        context: ./RabbitMQPrototype/AuthService
+        push: true
+        tags: wesje101/s6-2_personal_project:authservice
         labels: ${{ steps.meta.output.labels }}
         
     #- uses: actions/checkout@v3
