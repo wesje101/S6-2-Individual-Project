@@ -39,4 +39,10 @@ public class AuthController : ControllerBase
         }
         return NotFound();
     }
+
+    
+    public IActionResult TestGet()
+    {
+        return Ok("Got it");
+    }
 }
