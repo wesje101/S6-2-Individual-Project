@@ -13,18 +13,6 @@
       "UpstreamHttpMethod": ["Post"]
     },
     {
-      "DownstreamPathTemplate": "/",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "s6app-authservice-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/auth",
-      "UpstreamHttpMethod": ["Get"]
-    },
-    {
       "DownstreamPathTemplate": "/GetUsers",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
