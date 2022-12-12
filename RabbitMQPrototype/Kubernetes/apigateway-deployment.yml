@@ -31,3 +31,6 @@ spec:
       - name: apigateway
         image: wesje101/s6-2_personal_project:apigateway
         imagePullPolicy: Always
+        env:
+        - name: HOSTED_ENVIRONMENT
+          value: "kubernetes"

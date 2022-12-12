@@ -15,10 +15,10 @@ string? runningEnvironment = Environment.GetEnvironmentVariable("HOSTED_ENVIRONM
 switch (runningEnvironment)
 {
     case ("docker"):
-        string connectionString = builder.Configuration.GetConnectionString("PostgresConnectionString");
+        string connectionString = builder.Configuration.GetConnectionString("PostgressConnectionString");
         builder.Services.AddDbContext<AccountContext>(options => options.UseNpgsql(
             connectionString, 
-            x => x.MigrationsAssembly("AccountServiceAPI")));
+            x => x.MigrationsAssembly("AccountService")));
         break;
     case ("kubernetes"):
         builder.Services.AddDbContext<AccountContext>(options => options.UseInMemoryDatabase("AccountService"));
