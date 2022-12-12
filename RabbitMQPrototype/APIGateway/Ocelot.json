@@ -13,7 +13,7 @@
       "UpstreamHttpMethod": ["Post"]
     },
     {
-      "DownstreamPathTemplate": "/GetUsers",
+      "DownstreamPathTemplate": "/GetUsersa",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,7 +21,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/accounta",
+      "UpstreamPathTemplate": "/api/account",
       "UpstreamHttpMethod": ["Get"]
     },
     {
