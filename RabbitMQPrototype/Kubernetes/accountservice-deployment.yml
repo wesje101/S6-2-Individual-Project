@@ -30,3 +30,4 @@ spec:
       containers:
       - name: accountservice
         image: wesje101/s6-2_personal_project:accountservice
+        imagePullPolicy: Always

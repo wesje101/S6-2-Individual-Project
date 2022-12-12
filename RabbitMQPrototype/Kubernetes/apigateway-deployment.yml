@@ -30,3 +30,4 @@ spec:
       containers:
       - name: apigateway
         image: wesje101/s6-2_personal_project:apigateway
+        imagePullPolicy: Always

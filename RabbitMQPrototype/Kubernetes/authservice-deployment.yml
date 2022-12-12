@@ -30,3 +30,4 @@ spec:
       containers:
       - name: authservice
         image: wesje101/s6-2_personal_project:authservice
+        imagePullPolicy: Always
