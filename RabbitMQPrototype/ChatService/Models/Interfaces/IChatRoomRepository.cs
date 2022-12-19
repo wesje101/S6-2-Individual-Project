@@ -2,9 +2,9 @@
 
 public interface IChatRoomRepository
 {
-    public ChatRoom? GetChatroom(int id);
-    public IEnumerable<ChatRoom?> GetChatrooms();
-    public ChatRoom? AddChatroom(ChatRoom chatRoom);
-    public ChatRoom? UpdateChatroom(ChatRoom? chatRoom);
-    public bool DeleteChatroom(int id);
+    public ChatRoom? GetChatRoom(int id);
+    public IEnumerable<ChatRoom?> GetChatRooms();
+    public ChatRoom? AddChatRoom(ChatRoom chatRoom);
+    public ChatRoom? UpdateChatRoom(ChatRoom? chatRoom);
+    public bool DeleteChatRoom(int id);
 }

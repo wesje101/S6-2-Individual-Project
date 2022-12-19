@@ -14,6 +14,24 @@ public class ChatController : ControllerBase
     {
         _logic = logic;
     }
+
+    [HttpGet("GetAllChatRooms", Name = "GetAllChatRooms")]
+    public IActionResult GetAllChatRooms()
+    {
+        return Ok(_logic.GetAllChatRooms());
+    }
+    
+    [HttpGet("GetAllChatMessages", Name = "GetAllChatMessages")]
+    public IActionResult GetAllChatMessages()
+    {
+        return Ok(_logic.GetAllChatMessages());
+    }
+    
+    [HttpGet("GetAllUsers", Name = "GetAllUsers")]
+    public IActionResult GetAllUsers()
+    {
+        return Ok(_logic.GetAllUsers());
+    }
     
     [HttpPost("JoinChatRoomByRoomName",Name = "JoinChatRoomByRoomName")]
     public IActionResult JoinChatRoomByName(User user, string roomName)

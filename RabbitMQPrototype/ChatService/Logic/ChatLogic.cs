@@ -51,7 +51,7 @@ public class ChatLogic : IChatLogic
             throw new Exception($"room: {roomName} already exists");
         }
 
-        _roomRepository.AddChatroom(new ChatRoom() { _roomName = roomName });
+        _roomRepository.AddChatRoom(new ChatRoom() { _roomName = roomName });
     }
     
     public void CreateChatRoom(string roomName, User user)
@@ -66,7 +66,7 @@ public class ChatLogic : IChatLogic
         ChatRoom createdRoom = new ChatRoom() { _roomName = roomName };
         createdRoom._participants.Add(user);
         
-        _roomRepository.AddChatroom(createdRoom);
+        _roomRepository.AddChatRoom(createdRoom);
     }
 
     public void SendChatMessage(User user, string roomName, string message)
@@ -83,8 +83,37 @@ public class ChatLogic : IChatLogic
         _messageRepository.AddChatMessage(chatMessage);
     }
 
+    public IEnumerable<ChatRoom> GetAllChatRooms()
+    {
+        return _roomRepository.GetChatRooms();
+    }
+
+    public IEnumerable<User> GetAllUsers()
+    {
+        return _userRepository.GetUsers();
+    }
+
+    public IEnumerable<ChatMessage> GetAllChatMessages()
+    {
+        return _messageRepository.GetChatMessages();
+    }
+
+    public IEnumerable<ChatMessage> GetAllChatMessagesFromRoom(string roomName)
+    {
+        return _roomRepository.GetChatRooms()
+            .FirstOrDefault(i => i._roomName == roomName)
+            ._messages;
+    }
+
+    public IEnumerable<User> GetAllParticipantsFromRoom(string roomName)
+    {
+        return _roomRepository.GetChatRooms()
+            .FirstOrDefault(i => i._roomName == roomName)
+            ._participants;
+    }
+
     private ChatRoom? FindChatRoom(string roomName)
     {
-        return _roomRepository.GetChatrooms().FirstOrDefault(i => i._roomName == roomName);
+        return _roomRepository.GetChatRooms().FirstOrDefault(i => i._roomName == roomName);
     }
 }

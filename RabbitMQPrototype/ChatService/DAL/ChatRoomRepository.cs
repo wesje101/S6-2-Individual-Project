@@ -17,33 +17,33 @@ public class ChatRoomRepository : IChatRoomRepository
         }
     }
 
-    public ChatRoom? GetChatroom(int id)
+    public ChatRoom? GetChatRoom(int id)
     {
         return _context.ChatRooms.Find(id);
     }
 
-    public IEnumerable<ChatRoom?> GetChatrooms()
+    public IEnumerable<ChatRoom?> GetChatRooms()
     {
         return _context.ChatRooms.ToList();
     }
 
-    public ChatRoom? AddChatroom(ChatRoom chatRoom)
+    public ChatRoom? AddChatRoom(ChatRoom chatRoom)
     {
         _context.Add(chatRoom);
         _context.SaveChanges();
-        return GetChatroom(chatRoom._id);
+        return GetChatRoom(chatRoom._id);
     }
 
-    public ChatRoom? UpdateChatroom(ChatRoom? chatRoom)
+    public ChatRoom? UpdateChatRoom(ChatRoom? chatRoom)
     {
         _context.ChatRooms.Update(chatRoom);
         _context.SaveChanges();
-        return GetChatroom(chatRoom._id);
+        return GetChatRoom(chatRoom._id);
     }
 
-    public bool DeleteChatroom(int id)
+    public bool DeleteChatRoom(int id)
     {
-        var room = GetChatroom(id);
+        var room = GetChatRoom(id);
         if (room == null) return false;
         _context.ChatRooms.Remove(room);
         _context.SaveChanges();
