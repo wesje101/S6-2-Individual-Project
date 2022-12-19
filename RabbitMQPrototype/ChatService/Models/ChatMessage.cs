@@ -1,15 +1,30 @@
-﻿namespace ChatService.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ChatService.Models;
 
 public class ChatMessage
 {
-    private string _message;
-    private Chatroom _chatroom;
-    private DateTime _timeSent;
-
-    public ChatMessage(string message, Chatroom chatroom, DateTime timeSent)
+    public ChatMessage()
     {
-        _message = message;
-        _chatroom = chatroom;
-        _timeSent = timeSent;
+        this._timeSent = DateTime.Now;
     }
+    
+    [Key]
+    
+    public int _id { get; set; }
+    
+    [Required]
+    
+    public string _message { get; set; }
+    
+    [Required]
+    
+    public User _sender { get; set; }
+    
+    [Required]
+    
+    public ChatRoom _ChatRoom { get; set; }
+
+    public DateTime _timeSent { get; }
 }

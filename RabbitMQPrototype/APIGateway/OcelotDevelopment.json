@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "s6app-authservice-service",
-          "Port": 80
+          "Host": "host.docker.internal",
+          "Port": 8096
         }
       ],
       "UpstreamPathTemplate": "/api/auth",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "s6app-accountservice-service",
-          "Port": 80
+          "Host": "host.docker.internal",
+          "Port": 8095
         }
       ],
       "UpstreamPathTemplate": "/api/account",
@@ -29,15 +29,15 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "s6app-accountservice-service",
-          "Port": 80
+          "Host": "host.docker.internal",
+          "Port": 8095
         }
       ],
-      "UpstreamPathTemplate": "/api/account{id}",
+      "UpstreamPathTemplate": "/api/accountById",
       "UpstreamHttpMethod": ["Get"]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "s6app.com"
+    "BaseUrl": "http://localhost:8101"
   }
 }

@@ -51,7 +51,7 @@ public class AccountRepository : IAccountRepository
     {
         var account = GetAccount(id);
         if (account == null) return false;
-        _context.Accounts.Add(account);
+        _context.Accounts.Remove(account);
         _context.SaveChanges();
         return true;
 

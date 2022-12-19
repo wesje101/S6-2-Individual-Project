@@ -1,4 +1,5 @@
-﻿using AuthService.Messaging.MessagingDTOs;
+﻿using System.ComponentModel.DataAnnotations;
+using AuthService.Messaging.MessagingDTOs;
 
 namespace AuthService.Models;
 
@@ -6,33 +7,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 public class User
 {
-    public User(string name, string password)
-    {
-        _name = name;
-        _password = password;
-    }
+    [Key]
+    public int _id { get; set; }
 
-    private readonly int _id;
-    private readonly string _name;
-    private readonly string _password;
-    
-    public string GetName()
-    {
-        return _name;
-    }
+    [Required, StringLength(60, MinimumLength = 3)]
+    public string _name { get; set; }
 
-    public string GetPassword()
-    {
-        return _password;
-    }
-
-    public int GetId()
-    {
-        return _id;
-    }
+    [Required, StringLength(60, MinimumLength = 3)]
+    public string _password { get; set; }
 
     public override string ToString()
     {
-        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User, GetId(),GetName(), GetPassword()));
+        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User, _id,_name, _password));
     }
 }

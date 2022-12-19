@@ -1,3 +1,4 @@
+using AuthService.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Controllers;
@@ -6,7 +7,12 @@ namespace AuthService.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly AuthLogic _logic = new AuthLogic();
+    private readonly IAuthLogic _logic;
+
+    public AuthController(IAuthLogic logic)
+    {
+        _logic = logic;
+    }
     
     [HttpPost("~/SignIn",Name = "SignIn")]
     public IActionResult UserSignIn(string username, string password)
@@ -38,5 +44,11 @@ public class AuthController : ControllerBase
             return Ok();
         }
         return NotFound();
+    }
+    
+    [HttpGet("~/GetUsers",Name = "GetUsers")]
+    public IActionResult GetUsers()
+    {
+        return Ok(_logic.GetUsers());
     }
 }

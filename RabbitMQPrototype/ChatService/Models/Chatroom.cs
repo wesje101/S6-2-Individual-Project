@@ -1,50 +1,17 @@
-﻿namespace ChatService.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Chatroom
+namespace ChatService.Models;
+
+public class ChatRoom
 {
-    private string _roomName;
-    private List<User> _participants;
-    private List<ChatMessage> _messages;
-
-    public Chatroom(List<User> participants, string roomName)
-    {
-        _participants = participants;
-        _roomName = roomName;
-        _messages = InitiateMessageList();
-    }
-
-    private List<ChatMessage> InitiateMessageList()
-    {
-        return new List<ChatMessage>();
-    }
+    [Key]
+    public int _id;
     
-    public string GetRoomName()
-    {
-        return _roomName;
-    }
+    [Required, MinLength(3), MaxLength(60)]
+    public string _roomName;
+    
+    public List<User> _participants;
+    
+    public List<ChatMessage> _messages;
 
-    public IReadOnlyList<User> GetParticipants()
-    {
-        return _participants.AsReadOnly();
-    }
-
-    public bool JoinRoom(User user)
-    {
-        if (_participants.Contains(user)) return false;
-        _participants.Add(user);
-        return true;
-    }
-
-    public bool LeaveRoom(User user)
-    {
-        if (!_participants.Contains(user)) return false;
-        _participants.Remove(user);
-        return true;
-    }
-
-    public bool SendMessage(User user, ChatMessage message)
-    {
-        _messages.Add(message);
-        return true;
-    }
 }

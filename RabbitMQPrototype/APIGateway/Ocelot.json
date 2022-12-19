@@ -33,7 +33,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/account{id}",
+      "UpstreamPathTemplate": "/api/accountById",
       "UpstreamHttpMethod": ["Get"]
     }
   ],

@@ -1,11 +1,14 @@
-﻿namespace ChatService.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ChatService.Models;
 
 public class User
 {
-    private string _username;
-
-    public User(string username)
-    {
-        _username = username;
-    }
+    [Key]
+    
+    public int _id { get; set; }
+    
+    [Required, StringLength(60, MinimumLength = 3)]
+    public string _name { get; set; }
+    
 }

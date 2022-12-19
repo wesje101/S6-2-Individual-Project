@@ -21,6 +21,22 @@ services:
       POSTGRES_PASSWORD: account
     ports:
       - "8100:5432"
+  authservice_db:
+    container_name: authservice_db
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: auth
+    ports:
+      - "8102:5432"
+  chatservice_db:
+    container_name: chatservice_db
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: chat
+    ports:
+      - "8103:5432"
   accountservice:
     container_name: accountservice
     restart: always
