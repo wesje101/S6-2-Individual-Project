@@ -3,6 +3,11 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "RabbitMQPrototype\AccountService\**"
+      - "RabbitMQPrototype\APIGateway\**"
+      - "RabbitMQPrototype\AuthService\**"
+      - "RabbitMQPrototype\ChatService\**"
 
 jobs:
 
@@ -13,6 +18,19 @@ jobs:
     steps:
     - name: Check out the repo 
       uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters:
+          AccountService:
+            - 'RabbitMQPrototype\AccountService\**'
+          APIGateway:
+            - 'RabbitMQPrototype\APIGateway\**'
+          AuthService:
+            - 'RabbitMQPrototype\AuthService\**'
+          ChatService:
+            - 'RabbitMQPrototype\ChatService\**'
+          
         
     - name: Log in to Docker Hub
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -27,6 +45,7 @@ jobs:
         images: wesje101/s6-2_personal_project
         
     - name: Build and publish Account Service Docker image
+      if: steps.filter.outputs.AccountService == 'true'
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
         context: ./RabbitMQPrototype/AccountService
@@ -35,6 +54,7 @@ jobs:
         labels: ${{ steps.meta.output.labels }}
         
     - name: Build and publish Auth Service Docker image
+      if: steps.filter.outputs.AuthService == 'true'
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
         context: ./RabbitMQPrototype/AuthService
@@ -43,18 +63,19 @@ jobs:
         labels: ${{ steps.meta.output.labels }}
 
     - name: Build and publish API Gateway Docker image
+      if: steps.filter.outputs.APIGateway == 'true'
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
         context: ./RabbitMQPrototype/APIGateway
         push: true
         tags: wesje101/s6-2_personal_project:apigateway
         labels: ${{ steps.meta.output.labels }}
-    #- uses: actions/checkout@v3
-    #- name: Build account service image
-    #  working-directory: ./RabbitMQPrototype/AccountService 
-    #  run: docker build . --file Dockerfile --tag wesje101/s6-2_personal_project:accountservice
-    #
-    #- uses: actions/checkout@v3
-    #- name: push account service image
-    #  working-directory: ./RabbitMQPrototype/AccountService
-    #  run: docker push wesje101/s6-2_personal_project:accountservice
+        
+    - name: Build and publish Chat service Docker image
+      if: steps.filter.outputs.ChatService == 'true'
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        context: ./RabbitMQPrototype/ChatService
+        push: true
+        tags: wesje101/s6-2_personal_project:chatservice
+        labels: ${{ steps.meta.output.labels }}
