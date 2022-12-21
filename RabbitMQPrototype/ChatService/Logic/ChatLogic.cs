@@ -86,7 +86,7 @@ public class ChatLogic : IChatLogic
         
         _roomRepository.UpdateChatRoom(foundRoom, updateRoom);
         //TODO fix chatroom updates in database
-        //TODO Continue here
+        //TODO Continue here.
         _messageRepository.AddChatMessage(chatMessage);
     }
 
