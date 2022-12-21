@@ -21,13 +21,13 @@ switch (runningEnvironment)
         string connectionString = builder.Configuration.GetConnectionString("PostgressConnectionString");
         builder.Services.AddDbContext<ChatContext>(options => options.UseNpgsql(
             connectionString, 
-            x => x.MigrationsAssembly("AuthService")));
+            x => x.MigrationsAssembly("ChatService")));
         break;
     case ("kubernetes"):
-        builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("AuthService"));
+        builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("ChatService"));
         break;
     default:
-        builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("AuthService"));
+        builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("ChatService"));
         break;
 }
 

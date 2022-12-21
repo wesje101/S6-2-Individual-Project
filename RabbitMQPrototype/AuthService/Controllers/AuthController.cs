@@ -19,10 +19,10 @@ public class AuthController : ControllerBase
     {
         if (_logic.SignIn(username, password))
         {
-            return Ok();
+            return Ok("Signed in successfully");
         }
 
-        return NotFound();
+        return Ok("Something went wrong during sign-in");
     }
 
     [HttpGet("~/SignOut",Name = "SignOut")]
@@ -30,10 +30,10 @@ public class AuthController : ControllerBase
     {
         if (_logic.SignOut())
         {
-            return Ok();
+            return Ok("Signed out successfully");
         }
 
-        return NotFound();
+        return Ok("Something went wrong during sign-out");
     }
 
     [HttpPost("~/Register",Name = "Register")]
@@ -41,9 +41,9 @@ public class AuthController : ControllerBase
     {
         if (_logic.Register(username, password))
         {
-            return Ok();
+            return Ok("Account created successfully");
         }
-        return NotFound();
+        return Ok("This username is unavailable/inappropriate");
     }
     
     [HttpGet("~/GetUsers",Name = "GetUsers")]

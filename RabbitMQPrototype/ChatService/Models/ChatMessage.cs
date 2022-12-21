@@ -7,6 +7,7 @@ public class ChatMessage
 {
     public ChatMessage()
     {
+        //TODO Move out of constructor, time gets set to current time whenever retrieved from database
         this._timeSent = DateTime.Now;
     }
     

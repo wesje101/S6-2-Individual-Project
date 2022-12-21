@@ -34,11 +34,14 @@ public class ChatRoomRepository : IChatRoomRepository
         return GetChatRoom(chatRoom._id);
     }
 
-    public ChatRoom? UpdateChatRoom(ChatRoom? chatRoom)
+    public ChatRoom? UpdateChatRoom(ChatRoom oldRoom, ChatRoom updatedRoom)
     {
-        _context.ChatRooms.Update(chatRoom);
+        //_context.ChatRooms.Update(oldRoom);
+        oldRoom._messages = updatedRoom._messages;
+        oldRoom._participants = updatedRoom._participants;
+        oldRoom._roomName = updatedRoom._roomName;
         _context.SaveChanges();
-        return GetChatRoom(chatRoom._id);
+        return GetChatRoom(oldRoom._id);
     }
 
     public bool DeleteChatRoom(int id)

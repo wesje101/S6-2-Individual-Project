@@ -1,6 +1,7 @@
 ﻿using AuthService.Messaging;
 using AuthService.Models;
 using AuthService.Models.Interfaces;
+using ProfanityFilter;
 
 namespace AuthService;
 
@@ -10,9 +11,12 @@ public class AuthLogic : IAuthLogic
 
     private readonly IAuthRepository _repository;
 
+    private readonly ProfanityFilter.ProfanityFilter _filter;
+    
     public AuthLogic(IAuthRepository authRepository)
     {
         _repository = authRepository;
+        _filter = new ProfanityFilter.ProfanityFilter();
     }
     
     public bool SignIn(string username, string password)
@@ -32,6 +36,11 @@ public class AuthLogic : IAuthLogic
         var foundUser = _repository.GetUser(username);
         
         if (foundUser != null) return false;
+
+        if (_filter.ContainsProfanity(username))
+        {
+            return false;
+        }
         
         var newUser = new User(){        
             _name = username,

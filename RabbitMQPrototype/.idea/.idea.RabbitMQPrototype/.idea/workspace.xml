@@ -39,7 +39,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/399935fa436fb846ac62efb6d50a8d34b1034875a201574eb60f33ad5c7f4/RuntimeHelpers.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/485da50d43321b81edc28153271bdedb84943a243743e2deaa67a981587968/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/621526284d3e4868b98948aff942206525763e57e194a27623b66c384466/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d9a41d47547e1fe7fe548b21ab4de12cc2671170a023bc8c629017837eb5f4/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9b8313fc8d2cdb81deca7a49a6a876f8c757fbdef4d15998af099272eda8183/ConstructorBindingFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c9ca552eea9bb8fababbf1cd3f981cf68849ccc365dcca5627376f98e505c74/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cfbd35f99a5eb6bb8f21da64fd6e5ee6a8d8c11183483691b9381b5e6f16f8/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -66,7 +68,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Docker.Docker_Compose">
+  <component name="RunManager" selected=".NET Launch Settings Profile.ChatService">
     <configuration name="APIGateway" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/APIGateway/APIGateway.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -412,7 +414,8 @@
       <workItem from="1670832627513" duration="7931000" />
       <workItem from="1670920544528" duration="1818000" />
       <workItem from="1671093052985" duration="8341000" />
-      <workItem from="1671437810913" duration="12097000" />
+      <workItem from="1671437810913" duration="17561000" />
+      <workItem from="1671610790698" duration="1002000" />
     </task>
     <servers />
   </component>

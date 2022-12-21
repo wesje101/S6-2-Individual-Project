@@ -26,7 +26,7 @@ public class ChatLogic : IChatLogic
         {
             throw new Exception($"No room with name: {roomName} found");
         }
-        
+        //TODO check if user exists
         foundRoom._participants.Add(user);
     }
 
@@ -38,7 +38,7 @@ public class ChatLogic : IChatLogic
         {
             throw new Exception($"No room with name: {roomName} found");
         }
-        
+        //TODO check if user exists
         foundRoom._participants.Remove(user);
     }
 
@@ -64,6 +64,7 @@ public class ChatLogic : IChatLogic
         }
 
         ChatRoom createdRoom = new ChatRoom() { _roomName = roomName };
+        //TODO check if user exists
         createdRoom._participants.Add(user);
         
         _roomRepository.AddChatRoom(createdRoom);
@@ -76,10 +77,16 @@ public class ChatLogic : IChatLogic
         if (foundRoom == null)
         {
             throw new Exception($"No room with name: {roomName} found");
-        };
-        
+        }
+        //TODO check if user exists
         ChatMessage chatMessage = _messageFactory.CreateNewChatMessage(user, message, foundRoom);
+
+        ChatRoom updateRoom = foundRoom;
+        updateRoom._messages.Add(chatMessage);
         
+        _roomRepository.UpdateChatRoom(foundRoom, updateRoom);
+        //TODO fix chatroom updates in database
+        //TODO Continue here
         _messageRepository.AddChatMessage(chatMessage);
     }
 
@@ -101,19 +108,19 @@ public class ChatLogic : IChatLogic
     public IEnumerable<ChatMessage> GetAllChatMessagesFromRoom(string roomName)
     {
         return _roomRepository.GetChatRooms()
-            .FirstOrDefault(i => i._roomName == roomName)
+            .FirstOrDefault(i => i._roomName == roomName, null)
             ._messages;
     }
 
     public IEnumerable<User> GetAllParticipantsFromRoom(string roomName)
     {
         return _roomRepository.GetChatRooms()
-            .FirstOrDefault(i => i._roomName == roomName)
+            .FirstOrDefault(i => i._roomName == roomName, null)
             ._participants;
     }
 
     private ChatRoom? FindChatRoom(string roomName)
     {
-        return _roomRepository.GetChatRooms().FirstOrDefault(i => i._roomName == roomName);
+        return _roomRepository.GetChatRooms().FirstOrDefault(i => i._roomName == roomName, null);
     }
 }
