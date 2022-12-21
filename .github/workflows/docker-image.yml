@@ -4,10 +4,10 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "RabbitMQPrototype\AccountService\**"
-      - "RabbitMQPrototype\APIGateway\**"
-      - "RabbitMQPrototype\AuthService\**"
-      - "RabbitMQPrototype\ChatService\**"
+      - "RabbitMQPrototype/AccountService/**"
+      - "RabbitMQPrototype/APIGateway/**"
+      - "RabbitMQPrototype/AuthService/**"
+      - "RabbitMQPrototype/ChatService/**"
 
 jobs:
 
@@ -23,13 +23,13 @@ jobs:
       with:
         filters:
           AccountService:
-            - 'RabbitMQPrototype\AccountService\**'
+            - 'RabbitMQPrototype/AccountService/**'
           APIGateway:
-            - 'RabbitMQPrototype\APIGateway\**'
+            - 'RabbitMQPrototype/APIGateway/**'
           AuthService:
-            - 'RabbitMQPrototype\AuthService\**'
+            - 'RabbitMQPrototype/AuthService/**'
           ChatService:
-            - 'RabbitMQPrototype\ChatService\**'
+            - 'RabbitMQPrototype/ChatService/**'
           
         
     - name: Log in to Docker Hub
