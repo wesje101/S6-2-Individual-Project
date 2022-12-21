@@ -1,9 +1,8 @@
 ﻿using AuthService.Messaging;
 using AuthService.Models;
 using AuthService.Models.Interfaces;
-using ProfanityFilter;
 
-namespace AuthService;
+namespace AuthService.Logic;
 
 public class AuthLogic : IAuthLogic
 {

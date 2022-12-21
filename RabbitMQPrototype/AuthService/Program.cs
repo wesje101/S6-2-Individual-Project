@@ -1,7 +1,9 @@
 using AuthService;
 using AuthService.DAL;
+using AuthService.Logic;
 using AuthService.Messaging;
 using AuthService.Models.Interfaces;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +38,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
 
 var app = builder.Build();
 

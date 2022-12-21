@@ -68,7 +68,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.ChatService">
+  <component name="RunManager" selected=".NET Launch Settings Profile.AuthService">
     <configuration name="APIGateway" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/APIGateway/APIGateway.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -415,7 +415,7 @@
       <workItem from="1670920544528" duration="1818000" />
       <workItem from="1671093052985" duration="8341000" />
       <workItem from="1671437810913" duration="17561000" />
-      <workItem from="1671610790698" duration="1002000" />
+      <workItem from="1671610790698" duration="4722000" />
     </task>
     <servers />
   </component>
