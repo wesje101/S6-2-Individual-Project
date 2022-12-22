@@ -11,10 +11,6 @@ public class ChatRoomRepository : IChatRoomRepository
     public ChatRoomRepository(ChatContext context)
     {
         _context = context;
-        if (Environment.GetEnvironmentVariable("HOSTED_ENVIRONMENT") == "docker")
-        {
-            context.Database.Migrate();
-        }
     }
 
     public ChatRoom? GetChatRoom(int id)

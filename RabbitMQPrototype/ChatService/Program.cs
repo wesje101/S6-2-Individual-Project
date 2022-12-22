@@ -24,7 +24,11 @@ switch (runningEnvironment)
             x => x.MigrationsAssembly("ChatService")));
         break;
     case ("kubernetes"):
-        builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("ChatService"));
+        //builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("ChatService"));
+        connectionString = builder.Configuration.GetConnectionString("MySQLConnectionString");
+        builder.Services.AddDbContext<ChatContext>(options => options.UseSqlServer(
+            connectionString, 
+            x => x.MigrationsAssembly("ChatService")));
         break;
     default:
         builder.Services.AddDbContext<ChatContext>(options => options.UseInMemoryDatabase("ChatService"));

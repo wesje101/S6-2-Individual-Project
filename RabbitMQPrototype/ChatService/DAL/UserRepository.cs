@@ -11,10 +11,6 @@ public class UserRepository : IUserRepository
     public UserRepository(ChatContext context)
     {
         _context = context;
-        if (Environment.GetEnvironmentVariable("HOSTED_ENVIRONMENT") == "docker")
-        {
-            context.Database.Migrate();
-        }
     }
 
     public User? GetUser(int id)

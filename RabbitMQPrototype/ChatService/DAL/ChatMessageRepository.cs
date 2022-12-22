@@ -11,10 +11,6 @@ public class ChatMessageRepository : IChatMessageRepository
     public ChatMessageRepository(ChatContext context)
     {
         _context = context;
-        if (Environment.GetEnvironmentVariable("HOSTED_ENVIRONMENT") == "docker")
-        {
-            context.Database.Migrate();
-        }
     }
 
     public ChatMessage? GetChatMessage(int id)
