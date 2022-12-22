@@ -16685,7 +16685,7 @@
     </schema>
     <schema id="5543" parent="5510" name="dbo">
       <Current>1</Current>
-      <IntrospectionTimestamp>2022-12-22.12:22:36.320</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2022-12-22.12:35:10.800</IntrospectionTimestamp>
       <ObjectId>1</ObjectId>
     </schema>
     <schema id="5544" parent="5510" name="guest">
@@ -16694,5 +16694,51 @@
     <schema id="5545" parent="5510" name="sys">
       <ObjectId>4</ObjectId>
     </schema>
+    <table id="5546" parent="5543" name="Accounts">
+      <CreatedTimestamp>2022-12-22.12:32:41.060</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-22.12:32:41.067</ModifiedTimestamp>
+      <ObjectId>1685581043</ObjectId>
+    </table>
+    <column id="5547" parent="5546" name="id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="5548" parent="5546" name="name">
+      <DataType>nvarchar(60 char)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="5549" parent="5546" name="Accountid">
+      <DataType>int|0s</DataType>
+      <Position>3</Position>
+    </column>
+    <foreign-key id="5550" parent="5546" name="FK_Accounts_Accounts_Accountid">
+      <ColNames>Accountid</ColNames>
+      <CreatedTimestamp>2022-12-22.12:32:41.063</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-22.12:32:41.063</ModifiedTimestamp>
+      <ObjectId>1717581157</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefTableId>1685581043</RefTableId>
+      <RefTableName>Accounts</RefTableName>
+    </foreign-key>
+    <index id="5551" parent="5546" name="PK_Accounts">
+      <Clustering>1</Clustering>
+      <ColNames>id</ColNames>
+      <Position>1</Position>
+      <Unique>1</Unique>
+    </index>
+    <index id="5552" parent="5546" name="IX_Accounts_Accountid">
+      <ColNames>Accountid</ColNames>
+      <Position>2</Position>
+    </index>
+    <key id="5553" parent="5546" name="PK_Accounts">
+      <CreatedTimestamp>2022-12-22.12:32:41.063</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-22.12:32:41.063</ModifiedTimestamp>
+      <ObjectId>1701581100</ObjectId>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PK_Accounts</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

@@ -15,10 +15,11 @@ string? runningEnvironment = Environment.GetEnvironmentVariable("HOSTED_ENVIRONM
 // While running locally or debugging, an in-memory database is used.
 // When running (locally) in docker, a dockerized postgres database is used.
 // When running in kubernetes, a cloud database is used.
+string connectionString;
 switch (runningEnvironment)
 {
     case ("docker"):
-        string connectionString = builder.Configuration.GetConnectionString("PostgressConnectionString");
+        connectionString = builder.Configuration.GetConnectionString("PostgressConnectionString");
         builder.Services.AddDbContext<ChatContext>(options => options.UseNpgsql(
             connectionString, 
             x => x.MigrationsAssembly("ChatService")));

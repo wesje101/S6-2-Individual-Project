@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="AuthDB@s6appdbserver.database.windows.net">
+  <database-model serializer="dbm" dbms="AZURE" family-id="AZURE" format-version="4.43">
+    <root id="1">
+      <Dbms>AZURE</Dbms>
+      <ServerVersion>12.0.937</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="AuthDB">
+      <Current>1</Current>
+    </database>
+    <database id="3" parent="1" name="master"/>
+    <schema id="4" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="5" parent="2" name="db_accessadmin"/>
+    <schema id="6" parent="2" name="db_backupoperator"/>
+    <schema id="7" parent="2" name="db_datareader"/>
+    <schema id="8" parent="2" name="db_datawriter"/>
+    <schema id="9" parent="2" name="db_ddladmin"/>
+    <schema id="10" parent="2" name="db_denydatareader"/>
+    <schema id="11" parent="2" name="db_denydatawriter"/>
+    <schema id="12" parent="2" name="db_owner"/>
+    <schema id="13" parent="2" name="db_securityadmin"/>
+    <schema id="14" parent="2" name="dbo">
+      <Current>1</Current>
+    </schema>
+    <schema id="15" parent="2" name="guest"/>
+    <schema id="16" parent="2" name="sys"/>
+  </database-model>
+</dataSource>
