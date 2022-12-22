@@ -11,10 +11,6 @@ public class AuthRepository : IAuthRepository
     public AuthRepository(AuthContext context)
     {
         _context = context;
-        if (Environment.GetEnvironmentVariable("HOSTED_ENVIRONMENT") == "docker")
-        {
-            context.Database.Migrate();
-        }
     }
     
     public User? GetUser(int id)
