@@ -22,11 +22,11 @@ switch (runningEnvironment)
             x => x.MigrationsAssembly("AccountService")));
         break;
     case ("kubernetes"):
-        //builder.Services.AddDbContext<AccountContext>(options => options.UseInMemoryDatabase("AccountService"));
-        connectionString = builder.Configuration.GetConnectionString("MySQLConnectionString");
-        builder.Services.AddDbContext<AccountContext>(options => options.UseSqlServer(
-            connectionString, 
-            x => x.MigrationsAssembly("AccountService")));
+        builder.Services.AddDbContext<AccountContext>(options => options.UseInMemoryDatabase("AccountService"));
+            // connectionString = builder.Configuration.GetConnectionString("MySQLConnectionString");
+            // builder.Services.AddDbContext<AccountContext>(options => options.UseSqlServer(
+            //     connectionString, 
+            //     x => x.MigrationsAssembly("AccountService")));
         break;
     default:
         builder.Services.AddDbContext<AccountContext>(options => options.UseInMemoryDatabase("AccountService"));
