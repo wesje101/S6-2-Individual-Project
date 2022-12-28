@@ -32,6 +32,8 @@ public class AccountRepository : IAccountRepository
 
     public Account? AddAccount(Account account)
     {
+        var transaction = _context.Database.BeginTransaction();
+        
         _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] ON");
         _logger.LogInformation("SET IDENTITY_INSERT to ON");
         _context.Accounts.Add(account);
@@ -40,6 +42,8 @@ public class AccountRepository : IAccountRepository
         _logger.LogInformation("Saving changes");
         _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] OFF");
         _logger.LogInformation("SET IDENTITY_INSERT to OFF");
+        
+        transaction.Commit();
         return GetAccount(account.id);
     }
 
