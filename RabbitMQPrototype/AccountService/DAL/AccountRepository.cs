@@ -7,10 +7,12 @@ namespace AccountService.DAL;
 public class AccountRepository : IAccountRepository
 {
     private readonly AccountContext _context;
+    private readonly ILogger<AccountRepository> _logger;
 
-    public AccountRepository(AccountContext context)
+    public AccountRepository(AccountContext context, ILogger<AccountRepository> logger)
     {
         _context = context;
+        _logger = logger;
     }
     
     public Account? GetAccount(int id)
@@ -30,8 +32,14 @@ public class AccountRepository : IAccountRepository
 
     public Account? AddAccount(Account account)
     {
+        _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] ON");
+        _logger.LogInformation("SET IDENTITY_INSERT to ON");
         _context.Accounts.Add(account);
+        _logger.LogInformation("Adding account");
         _context.SaveChanges();
+        _logger.LogInformation("Saving changes");
+        _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] OFF");
+        _logger.LogInformation("SET IDENTITY_INSERT to OFF");
         return GetAccount(account.id);
     }
 
