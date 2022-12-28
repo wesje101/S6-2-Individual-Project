@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AccountService.Models;
 
 public class Account
 {
-    [Key] 
+    [Key] [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int id { get; set; }
-
-    [Required, StringLength(60, MinimumLength = 3)]
+    
     public string name { get; set; }
     
     public List<Account> FriendList { get; set; }
