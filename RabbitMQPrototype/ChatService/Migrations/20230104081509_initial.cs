@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -51,17 +52,17 @@ namespace ChatService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     message = table.Column<string>(name: "_message", type: "text", nullable: false),
                     senderid = table.Column<int>(name: "_sender_id", type: "integer", nullable: false),
-                    ChatRoomid = table.Column<int>(name: "_ChatRoom_id", type: "integer", nullable: false)
+                    timeSent = table.Column<DateTime>(name: "_timeSent", type: "timestamp with time zone", nullable: false),
+                    ChatRoomid = table.Column<int>(name: "ChatRoom_id", type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChatMessages", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ChatMessages_ChatRooms__ChatRoom_id",
+                        name: "FK_ChatMessages_ChatRooms_ChatRoom_id",
                         column: x => x.ChatRoomid,
                         principalTable: "ChatRooms",
-                        principalColumn: "_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "_id");
                     table.ForeignKey(
                         name: "FK_ChatMessages_Users__sender_id",
                         column: x => x.senderid,
@@ -71,14 +72,14 @@ namespace ChatService.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChatMessages__ChatRoom_id",
-                table: "ChatMessages",
-                column: "_ChatRoom_id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ChatMessages__sender_id",
                 table: "ChatMessages",
                 column: "_sender_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatMessages_ChatRoom_id",
+                table: "ChatMessages",
+                column: "ChatRoom_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_ChatRoom_id",

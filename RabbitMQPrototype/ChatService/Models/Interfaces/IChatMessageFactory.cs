@@ -2,5 +2,5 @@
 
 public interface IChatMessageFactory
 {
-    public ChatMessage CreateNewChatMessage(User sender, string message, ChatRoom room);
+    public ChatMessage CreateNewChatMessage(User sender, string message);
 }

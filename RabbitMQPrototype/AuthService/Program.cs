@@ -46,6 +46,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy=>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     {
         googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
@@ -61,10 +71,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
+//switch (runningEnvironment)
+//{
+//    case("docker"):
+//        using (var scope = app.Services.CreateScope())
+//        {
+//            var services = scope.ServiceProvider;
+//            var context = services.GetRequiredService<AuthContext>();
+//            context.Database.EnsureDeleted();
+//            context.Database.EnsureCreated();
+//        }
+//        break;
+//    case("kubernetes"):
+//        break;
+//    default:
+//        break;
+//}
 app.Run();

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChatService.Migrations
 {
     [DbContext(typeof(ChatContext))]
-    [Migration("20221219121824_initial")]
+    [Migration("20230104081509_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace ChatService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("_id"));
 
-                    b.Property<int>("_ChatRoom_id")
+                    b.Property<int?>("ChatRoom_id")
                         .HasColumnType("integer");
 
                     b.Property<string>("_message")
@@ -43,9 +43,12 @@ namespace ChatService.Migrations
                     b.Property<int>("_sender_id")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("_timeSent")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("_id");
 
-                    b.HasIndex("_ChatRoom_id");
+                    b.HasIndex("ChatRoom_id");
 
                     b.HasIndex("_sender_id");
 
@@ -95,19 +98,15 @@ namespace ChatService.Migrations
 
             modelBuilder.Entity("ChatService.Models.ChatMessage", b =>
                 {
-                    b.HasOne("ChatService.Models.ChatRoom", "_ChatRoom")
+                    b.HasOne("ChatService.Models.ChatRoom", null)
                         .WithMany("_messages")
-                        .HasForeignKey("_ChatRoom_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChatRoom_id");
 
                     b.HasOne("ChatService.Models.User", "_sender")
                         .WithMany()
                         .HasForeignKey("_sender_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("_ChatRoom");
 
                     b.Navigation("_sender");
                 });

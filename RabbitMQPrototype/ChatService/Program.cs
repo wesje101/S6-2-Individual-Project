@@ -47,8 +47,33 @@ builder.Services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
 builder.Services.AddScoped<IChatMessageFactory, ChatMessageFactory>();
 
+builder.Services.AddHostedService<MessageBusListener>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy=>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
+
+switch (runningEnvironment)
+{
+    case("docker"):
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            var context = services.GetRequiredService<ChatContext>();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
+        break;
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -56,6 +81,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

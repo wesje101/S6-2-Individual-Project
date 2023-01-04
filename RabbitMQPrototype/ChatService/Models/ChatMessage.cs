@@ -5,12 +5,7 @@ namespace ChatService.Models;
 
 public class ChatMessage
 {
-    public ChatMessage()
-    {
-        //TODO Move out of constructor, time gets set to current time whenever retrieved from database
-        this._timeSent = DateTime.Now;
-    }
-    
+
     [Key]
     
     public int _id { get; set; }
@@ -22,10 +17,6 @@ public class ChatMessage
     [Required]
     
     public User _sender { get; set; }
-    
-    [Required]
-    
-    public ChatRoom _ChatRoom { get; set; }
 
-    public DateTime _timeSent { get; }
+    public long _timeSent { get; set; }
 }

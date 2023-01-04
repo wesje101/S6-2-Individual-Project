@@ -7,7 +7,7 @@ public interface IUserRepository
     public IEnumerable<User> GetUsers();
     public User? AddUser(User user);
     public User? UpdateUser(User user);
-    public bool DeleteUser(int id);
+    public User? DeleteUser(int id);
     
     
 }

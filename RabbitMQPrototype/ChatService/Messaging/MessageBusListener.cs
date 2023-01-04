@@ -1,11 +1,14 @@
 ﻿using System.Text;
-
-namespace ChatService.Messaging;
-
+using System.Text.Json;
+using ChatService.Messaging.MessagingDTOs;
+using ChatService.Models;
+using ChatService.Models.Interfaces;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-public class MessageBusListener :BackgroundService
+namespace ChatService.Messaging;
+
+public class MessageBusListener : BackgroundService
 {
     private readonly IConfiguration _configuration;
     private readonly IServiceScopeFactory _scopeFactory;
@@ -14,7 +17,7 @@ public class MessageBusListener :BackgroundService
     private IModel _channel;
     private string _queueName;
     
-    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory, ILogger<MessageBusListener> logger)
+    public MessageBusListener(IConfiguration configuration, IServiceScopeFactory scopeFactory ,ILogger<MessageBusListener> logger)
     {
         _configuration = configuration;
         _scopeFactory = scopeFactory;
@@ -23,9 +26,9 @@ public class MessageBusListener :BackgroundService
         var factory = new ConnectionFactory() { HostName = _configuration["RabbitMQ:Host"] };
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
-        _channel.ExchangeDeclare(exchange:"test-exchange", type: ExchangeType.Direct);
+        _channel.ExchangeDeclare(exchange:"auth_service_out", type: ExchangeType.Fanout);
         _queueName = _channel.QueueDeclare().QueueName;
-        _channel.QueueBind(queue: _queueName, exchange: "test-exchange", routingKey: "test-key");
+        _channel.QueueBind(queue: _queueName, exchange: "auth_service_out", routingKey: " ");
     }
     
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -43,10 +46,42 @@ public class MessageBusListener :BackgroundService
             {
                 _logger.LogInformation("Message received: {message}", message);
             }
+            
+            ParseMessage(message);
         };
 
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 
         return Task.CompletedTask;
+    }
+
+    private void ParseMessage(string message)
+    {
+        _logger.LogInformation("Parse start");
+        
+        BaseDTO? receivedData = JsonSerializer.Deserialize<BaseDTO>(message);
+
+        if (receivedData == null) return;
+        
+        switch (receivedData.Identifier)
+        {
+            case DTOIdentifier.User:
+                UserDTO? receivedUser = JsonSerializer.Deserialize<UserDTO>(message);
+                _logger.LogInformation("user null: {userState}", receivedUser == null);
+                _logger.LogInformation("username null: {usernameState}", receivedUser.Username == null);
+                if (receivedUser?.Username != null)
+                {
+                    using (var scope = _scopeFactory.CreateScope())
+                    {
+                        _logger.LogInformation("Accessing Logic");
+                        var logic = scope.ServiceProvider.GetRequiredService<IChatLogic>();
+                        _logger.LogInformation("Adding user");
+                        logic.CreateUser(new User() {_id = receivedUser.Id, _name = receivedUser.Username});
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

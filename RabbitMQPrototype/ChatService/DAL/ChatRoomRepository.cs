@@ -15,7 +15,9 @@ public class ChatRoomRepository : IChatRoomRepository
 
     public ChatRoom? GetChatRoom(int id)
     {
-        return _context.ChatRooms.Find(id);
+        return _context.ChatRooms.Include(
+            chatroom => chatroom._participants).Include(
+            chatroom => chatroom._messages).SingleOrDefault(chatroom => chatroom._id == id);
     }
 
     public IEnumerable<ChatRoom?> GetChatRooms()
@@ -30,14 +32,18 @@ public class ChatRoomRepository : IChatRoomRepository
         return GetChatRoom(chatRoom._id);
     }
 
-    public ChatRoom? UpdateChatRoom(ChatRoom oldRoom, ChatRoom updatedRoom)
+    public ChatRoom? UpdateChatRoom(int roomId, ChatRoom updatedRoom)
     {
-        //_context.ChatRooms.Update(oldRoom);
-        oldRoom._messages = updatedRoom._messages;
-        oldRoom._participants = updatedRoom._participants;
-        oldRoom._roomName = updatedRoom._roomName;
+        ChatRoom? repoRoom = GetChatRoom(roomId);
+        if (repoRoom == null)
+        {
+            return null;
+        }
+        repoRoom._messages = updatedRoom._messages;
+        repoRoom._participants = updatedRoom._participants;
+        repoRoom._roomName = updatedRoom._roomName;
         _context.SaveChanges();
-        return GetChatRoom(oldRoom._id);
+        return GetChatRoom(repoRoom._id);
     }
 
     public bool DeleteChatRoom(int id)

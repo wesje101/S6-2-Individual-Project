@@ -9,6 +9,9 @@ public class AccountRepository : IAccountRepository
     private readonly AccountContext _context;
     private readonly ILogger<AccountRepository> _logger;
 
+    string? runningEnvironment = Environment.GetEnvironmentVariable("HOSTED_ENVIRONMENT");
+
+    
     public AccountRepository(AccountContext context, ILogger<AccountRepository> logger)
     {
         _context = context;
@@ -32,19 +35,34 @@ public class AccountRepository : IAccountRepository
 
     public Account? AddAccount(Account account)
     {
-        var transaction = _context.Database.BeginTransaction();
+        switch (runningEnvironment)
+        {
+            case("docker"):
+                _context.Accounts.Add(account);
+                _context.SaveChanges();
+                break;
+            case("kubernetes"):
+                var transaction = _context.Database.BeginTransaction();
         
-        _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] ON");
-        _logger.LogInformation("SET IDENTITY_INSERT to ON");
-        _context.Accounts.Add(account);
-        _logger.LogInformation("Adding account");
-        _context.SaveChanges();
-        _logger.LogInformation("Saving changes");
-        _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] OFF");
-        _logger.LogInformation("SET IDENTITY_INSERT to OFF");
+                _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] ON");
+                _logger.LogInformation("SET IDENTITY_INSERT to ON");
+                _context.Accounts.Add(account);
+                _logger.LogInformation("Adding account");
+                _context.SaveChanges();
+                _logger.LogInformation("Saving changes");
+                _context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Accounts] OFF");
+                _logger.LogInformation("SET IDENTITY_INSERT to OFF");
         
-        transaction.Commit();
+                transaction.Commit();
+                break;
+            default:
+                _context.Accounts.Add(account);
+                _context.SaveChanges();
+                break;
+        }
         return GetAccount(account.id);
+
+
     }
 
     public Account? UpdateAccount(Account account)

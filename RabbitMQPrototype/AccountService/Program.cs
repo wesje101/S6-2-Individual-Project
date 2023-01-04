@@ -12,7 +12,7 @@ string? runningEnvironment = Environment.GetEnvironmentVariable("HOSTED_ENVIRONM
 // While running locally or debugging, an in-memory database is used.
 // When running (locally) in docker, a dockerized postgres database is used.
 // When running in kubernetes, a cloud database is used.
-string connectionString;
+string? connectionString;
 switch (runningEnvironment)
 {
     case ("docker"):
@@ -42,6 +42,16 @@ builder.Services.AddScoped<IAccountLogic, AccountLogic>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddHostedService<MessageBusListener>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy=>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,10 +61,30 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+//switch (runningEnvironment)
+//{
+//    case("docker"):
+//        using (var scope = app.Services.CreateScope())
+//        {
+//            var services = scope.ServiceProvider;
+//            var context = services.GetRequiredService<AccountContext>();
+//            context.Database.EnsureDeleted();
+//            context.Database.EnsureCreated();
+//        }
+//        break;
+//    case("kubernetes"):
+//        break;
+//    default:
+//        break;
+//}
+
 
 app.Run();

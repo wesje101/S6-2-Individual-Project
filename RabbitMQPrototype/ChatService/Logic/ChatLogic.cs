@@ -1,5 +1,6 @@
 ﻿using ChatService.Models;
 using ChatService.Models.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ChatService;
 
@@ -9,11 +10,36 @@ public class RoomNotFoundException : Exception
     {
         
     }
+    
+}
+
+public class UserNotFoundException : Exception
+{
+    public UserNotFoundException(string message) : base(message)
+    {
+        
+    }
 }
 
 public class RoomAlreadyExistsException : Exception
 {
     public RoomAlreadyExistsException(string message) : base(message)
+    {
+        
+    }
+}
+
+public class UserNotInChatroomException : Exception
+{
+    public UserNotInChatroomException(string message) : base(message)
+    {
+        
+    }
+}
+
+public class RoomEmptyException : Exception
+{
+    public RoomEmptyException(string message) : base(message)
     {
         
     }
@@ -33,7 +59,7 @@ public class ChatLogic : IChatLogic
         _messageFactory = messageFactory;
     }
 
-    public void JoinChatRoomByName(User user, string roomName)
+    public ChatRoom JoinChatRoomByName(User user, string roomName)
     {
         var foundRoom = FindChatRoom(roomName);
 
@@ -41,35 +67,56 @@ public class ChatLogic : IChatLogic
         {
             throw new RoomNotFoundException($"No room with name: {roomName} found");
         }
-        //TODO check if user exists
-        foundRoom._participants.Add(user);
+        
+        User? foundUser = _userRepository.GetUser(user._id);
+
+        if (foundUser == null)
+        {
+            throw new UserNotFoundException($"Given user could not be found");
+        }
+
+
+        var newParticipants = new List<User>();
+        if (!foundRoom._participants.IsNullOrEmpty())
+        {
+            newParticipants = new List<User>(foundRoom._participants);
+        }
+        
+        newParticipants.Add(foundUser);
+        ChatRoom oldRoom = foundRoom;
+        foundRoom._participants = newParticipants;
+        _roomRepository.UpdateChatRoom(oldRoom._id, foundRoom);
+        return foundRoom;
     }
 
-    public void LeaveChatRoomByName(User user, string roomName)
+    public ChatRoom LeaveChatRoomByName(User user, string roomName)
     {
         var foundRoom = FindChatRoom(roomName);
-
+        
         if (foundRoom == null)
         {
             throw new RoomNotFoundException($"No room with name: {roomName} found");
         }
-        //TODO check if user exists
-        foundRoom._participants.Remove(user);
-    }
+        
+        User? foundUser = _userRepository.GetUser(user._id);
 
-    public void CreateChatRoom(string roomName)
-    {
-        var foundRoom = FindChatRoom(roomName);
-
-        if (foundRoom != null)
+        if (foundUser == null)
         {
-            throw new RoomAlreadyExistsException($"room: {roomName} already exists");
+            throw new UserNotFoundException($"Given user could not be found");
         }
-
-        _roomRepository.AddChatRoom(new ChatRoom() { _roomName = roomName });
+        
+        if (foundRoom._participants.IsNullOrEmpty())
+        {
+            throw new RoomEmptyException($"{roomName} is empty");
+        }
+        var newParticipants = new List<User>(foundRoom._participants);
+        newParticipants.Remove(foundUser);
+        foundRoom._participants = newParticipants;
+        _roomRepository.UpdateChatRoom(foundRoom._id, foundRoom);
+        return foundRoom;
     }
-    
-    public void CreateChatRoom(string roomName, User user)
+
+    public ChatRoom CreateChatRoom(string roomName)
     {
         var foundRoom = FindChatRoom(roomName);
 
@@ -79,13 +126,33 @@ public class ChatLogic : IChatLogic
         }
 
         ChatRoom createdRoom = new ChatRoom() { _roomName = roomName };
-        //TODO check if user exists
-        createdRoom._participants.Add(user);
-        
         _roomRepository.AddChatRoom(createdRoom);
+        return createdRoom;
+    }
+    
+    public ChatRoom CreateChatRoom(string roomName, User user)
+    {
+        var foundRoom = FindChatRoom(roomName);
+
+        if (foundRoom != null)
+        {
+            throw new RoomAlreadyExistsException($"room: {roomName} already exists");
+        }
+
+        User? foundUser = _userRepository.GetUser(user._id);
+
+        if (foundUser == null)
+        {
+            throw new UserNotFoundException($"Given user could not be found");
+        }
+        
+        ChatRoom createdRoom = new ChatRoom() { _roomName = roomName, _participants = new List<User>(){foundUser}};
+
+        
+        return _roomRepository.AddChatRoom(createdRoom);
     }
 
-    public void SendChatMessage(User user, string roomName, string message)
+    public ChatMessage SendChatMessage(User user, string roomName, string message)
     {
         var foundRoom = FindChatRoom(roomName);
 
@@ -93,16 +160,34 @@ public class ChatLogic : IChatLogic
         {
             throw new RoomNotFoundException($"No room with name: {roomName} found");
         }
-        //TODO check if user exists
-        ChatMessage chatMessage = _messageFactory.CreateNewChatMessage(user, message, foundRoom);
+        
+        User? foundUser = _userRepository.GetUser(user._id);
+
+        if (foundUser == null)
+        {
+            throw new UserNotFoundException($"Given user could not be found");
+        }
+
+        if (foundRoom._participants.IsNullOrEmpty() || !foundRoom._participants.Contains(foundUser))
+        {
+            throw new UserNotInChatroomException($"Given user is not part of {roomName}");
+        }
+        
+        ChatMessage chatMessage = _messageFactory.CreateNewChatMessage(foundUser, message);
 
         ChatRoom updateRoom = foundRoom;
-        updateRoom._messages.Add(chatMessage);
         
-        _roomRepository.UpdateChatRoom(foundRoom, updateRoom);
-        //TODO fix chatroom updates in database
-        //TODO Continue here.
-        _messageRepository.AddChatMessage(chatMessage);
+        var messages = new List<ChatMessage>();
+        if (foundRoom._messages.IsNullOrEmpty())
+        {
+            foundRoom._messages = new List<ChatMessage>();
+        }
+        messages.Add(chatMessage);
+        updateRoom._messages = messages;
+        
+        _roomRepository.UpdateChatRoom(foundRoom._id, updateRoom);
+
+        return _messageRepository.GetChatMessage(chatMessage._id);
     }
 
     public IEnumerable<ChatRoom?> GetAllChatRooms()
@@ -115,6 +200,11 @@ public class ChatLogic : IChatLogic
         return _userRepository.GetUsers();
     }
 
+    public ChatRoom? GetChatRoom(int id)
+    {
+        return _roomRepository.GetChatRoom(id);
+    }
+    
     public IEnumerable<ChatMessage> GetAllChatMessages()
     {
         return _messageRepository.GetChatMessages();
@@ -143,6 +233,21 @@ public class ChatLogic : IChatLogic
         }
 
         throw new RoomNotFoundException($"No room with name: {roomName} found");
+    }
+
+    public User CreateUser(User user)
+    {
+        return _userRepository.AddUser(user);
+    }
+
+    public User GetUser(int id)
+    {
+        return _userRepository.GetUser(id);
+    }
+
+    public User DeleteUser(int id)
+    {
+        return _userRepository.DeleteUser(id);
     }
 
     private ChatRoom? FindChatRoom(string roomName)

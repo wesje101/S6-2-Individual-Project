@@ -42,12 +42,12 @@ public class UserRepository : IUserRepository
         return GetUser(user._id);
     }
 
-    public bool DeleteUser(int id)
+    public User? DeleteUser(int id)
     {
         var account = GetUser(id);
-        if (account == null) return false;
+        if (account == null) return null;
         _context.Users.Remove(account);
         _context.SaveChanges();
-        return true;
+        return account;
     }
 }

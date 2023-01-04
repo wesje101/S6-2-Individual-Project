@@ -13,9 +13,9 @@ public class ChatMessageFactory : IChatMessageFactory
         filter = new ProfanityFilter.ProfanityFilter();
     }
     
-    public ChatMessage CreateNewChatMessage(User sender, string message, ChatRoom room)
+    public ChatMessage CreateNewChatMessage(User sender, string message)
     {
         string censoredMessage = filter.CensorString(message);
-        return new ChatMessage(){_sender = sender, _message = censoredMessage, _ChatRoom = room};
+        return new ChatMessage(){_sender = sender, _message = censoredMessage, _timeSent = DateTime.Now.ToFileTimeUtc()};
     }
 }

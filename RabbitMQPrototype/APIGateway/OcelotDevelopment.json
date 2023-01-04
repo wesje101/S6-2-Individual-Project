@@ -35,6 +35,42 @@
       ],
       "UpstreamPathTemplate": "/api/accountById",
       "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/GetAllChatrooms",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chatrooms",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/JoinChatRoomByName?{user}&{roomName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/JoinChatRoomByName",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/CreateChatRoom",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/CreateChatRoom",
+      "UpstreamHttpMethod": ["Post"]
     }
   ],
   "GlobalConfiguration": {
