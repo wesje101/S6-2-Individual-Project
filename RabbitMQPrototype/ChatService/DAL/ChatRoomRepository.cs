@@ -22,7 +22,9 @@ public class ChatRoomRepository : IChatRoomRepository
 
     public IEnumerable<ChatRoom?> GetChatRooms()
     {
-        return _context.ChatRooms.ToList();
+        return _context.ChatRooms.Include(
+            chatroom => chatroom._participants).Include(
+            chatroom => chatroom._messages).ToList();
     }
 
     public ChatRoom? AddChatRoom(ChatRoom chatRoom)

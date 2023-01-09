@@ -64,6 +64,20 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 
 var app = builder.Build();
 
+switch (runningEnvironment)
+{
+    case("docker"):
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            var context = services.GetRequiredService<AuthContext>();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
+        break;
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -49,7 +49,19 @@
       "UpstreamHttpMethod": ["Get"]
     },
     {
-      "DownstreamPathTemplate": "/Chat/JoinChatRoomByName?{user}&{roomName}",
+      "DownstreamPathTemplate": "/Chat/GetChatroom?{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chatroom",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/JoinChatRoomByRoomName?{roomName}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -58,7 +70,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/JoinChatRoomByName",
-      "UpstreamHttpMethod": ["Get"]
+      "UpstreamHttpMethod": ["Post"]
     },
     {
       "DownstreamPathTemplate": "/Chat/CreateChatRoom",
@@ -70,6 +82,30 @@
         }
       ],
       "UpstreamPathTemplate": "/api/CreateChatRoom",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/SendChatMessage?{roomName}&{message}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/SendChatMessage",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/LeaveChatRoomByRoomName?{roomName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/api/LeaveChatRoomByName",
       "UpstreamHttpMethod": ["Post"]
     }
   ],
