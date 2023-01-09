@@ -35,6 +35,78 @@
       ],
       "UpstreamPathTemplate": "/api/accountById",
       "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/GetAllChatrooms",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chatrooms",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/GetChatroom?{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chatroom",
+      "UpstreamHttpMethod": ["Get"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/JoinChatRoomByRoomName?{roomName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/JoinChatRoomByName",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/CreateChatRoom",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/CreateChatRoom",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/SendChatMessage?{roomName}&{message}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/SendChatMessage",
+      "UpstreamHttpMethod": ["Post"]
+    },
+    {
+      "DownstreamPathTemplate": "/Chat/LeaveChatRoomByRoomName?{roomName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "s6app-chatservice-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/LeaveChatRoomByName",
+      "UpstreamHttpMethod": ["Post"]
     }
   ],
   "GlobalConfiguration": {
