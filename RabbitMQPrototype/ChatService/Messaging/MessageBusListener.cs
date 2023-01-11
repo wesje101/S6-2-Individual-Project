@@ -76,7 +76,7 @@ public class MessageBusListener : BackgroundService
                         _logger.LogInformation("Accessing Logic");
                         var logic = scope.ServiceProvider.GetRequiredService<IChatLogic>();
                         _logger.LogInformation("Adding user");
-                        logic.CreateUser(new User() {_id = receivedUser.Id, _name = receivedUser.Username});
+                        logic.CreateUser(new User() {_id = receivedUser.Id, _name = receivedUser.Username, GoogleId = receivedUser.GoogleId});
                     }
                 }
                 break;

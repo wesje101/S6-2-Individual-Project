@@ -9,6 +9,7 @@ public class Account
     public int id { get; set; }
     
     public string name { get; set; }
+    public string GoogleId { get; set; }
     
     public List<Account> FriendList { get; set; }
 

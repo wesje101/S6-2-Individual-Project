@@ -13,11 +13,9 @@ public class User
     [Required, StringLength(60, MinimumLength = 3)]
     public string _name { get; set; }
 
-    [Required, StringLength(60, MinimumLength = 3)]
-    public string _password { get; set; }
-
+    public string GoogleId { get; set; }
     public override string ToString()
     {
-        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User, _id,_name, _password));
+        return JsonSerializer.Serialize(new UserDTO(DTOIdentifier.User, _id,_name, GoogleId));
     }
 }

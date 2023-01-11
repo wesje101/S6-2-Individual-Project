@@ -74,10 +74,10 @@ public class AccountRepository : IAccountRepository
 
     public bool DeleteAccount(int id)
     {
+        Account deletedAccount = new Account() { id = id, name = "[Deleted]" };
         var account = GetAccount(id);
         if (account == null) return false;
-        _context.Accounts.Remove(account);
-        _context.SaveChanges();
+        UpdateAccount(deletedAccount);
         return true;
 
     }

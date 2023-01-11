@@ -8,4 +8,5 @@ public interface IAuthRepository
     public User? AddUser(User user);
     public User? UpdateUser(User user);
     public bool DeleteUser(int id);
+    int GetAccountIdFromGoogleId(string googleId);
 }

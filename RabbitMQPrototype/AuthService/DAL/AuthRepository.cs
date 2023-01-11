@@ -51,4 +51,19 @@ public class AuthRepository : IAuthRepository
         return true;
 
     }
+
+    public int GetAccountIdFromGoogleId(string googleId)
+    {
+        int id;
+        try
+        {
+            id = _context.Users.First(e => e.GoogleId == googleId)._id;
+        }
+        catch (InvalidOperationException)
+        {
+            return -1;
+        }
+
+        return id;
+    }
 }

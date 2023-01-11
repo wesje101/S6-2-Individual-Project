@@ -1,4 +1,6 @@
 using AuthService;
+using AuthService.Attributes;
+using AuthService.Controllers;
 using AuthService.DAL;
 using AuthService.Logic;
 using AuthService.Messaging;
@@ -45,6 +47,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<AuthorizeGoogleTokenAttribute>();
 
 builder.Services.AddCors(options =>
 {
@@ -55,12 +58,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-    {
-        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientSecret"];
-    });
 
 var app = builder.Build();
 

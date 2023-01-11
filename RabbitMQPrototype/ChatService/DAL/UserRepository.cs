@@ -44,10 +44,10 @@ public class UserRepository : IUserRepository
 
     public User? DeleteUser(int id)
     {
+        User deletedUser = new User(){_id = id, _name = "[Deleted]"};
         var account = GetUser(id);
         if (account == null) return null;
-        _context.Users.Remove(account);
-        _context.SaveChanges();
+        UpdateUser(deletedUser);
         return account;
     }
 }

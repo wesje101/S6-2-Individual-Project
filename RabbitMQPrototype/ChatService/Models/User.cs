@@ -10,5 +10,6 @@ public class User
     
     [Required, StringLength(60, MinimumLength = 3)]
     public string _name { get; set; }
+    public string GoogleId { get; set; }
     
 }
