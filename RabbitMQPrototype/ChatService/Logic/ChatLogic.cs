@@ -215,9 +215,10 @@ public class ChatLogic : IChatLogic
         IEnumerable<ChatRoom?> chatRooms = _roomRepository.GetChatRooms();
         if (chatRooms.Any())
         {
-            return chatRooms
+            IEnumerable<ChatMessage> foundMessages = chatRooms
                 .FirstOrDefault(i => i?._roomName == roomName, null)
                 ._messages;
+            return foundMessages;
         }
         throw new RoomNotFoundException($"No room with name: {roomName} found");
     }

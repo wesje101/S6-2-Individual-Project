@@ -22,7 +22,7 @@ public class AuthLogic : IAuthLogic
     {
         var foundUser = _repository.GetUser(username);
 
-        return foundUser != null && foundUser._password == password;
+        return foundUser != null;
     }
     
     public bool SignOut()
@@ -30,30 +30,41 @@ public class AuthLogic : IAuthLogic
         return false;
     }
     
-    public bool Register(string username, string password)
+    public bool Register(User user)
     {
-        var foundUser = _repository.GetUser(username);
+        var foundUser = _repository.GetUser(user._name);
         
         if (foundUser != null) return false;
 
-        if (_filter.ContainsProfanity(username))
+        if (_filter.ContainsProfanity(user._name))
         {
             return false;
         }
-        
-        var newUser = new User(){        
-            _name = username,
-            _password = password};
 
-        _repository.AddUser(newUser);
-        _messageSender.SendMessage(newUser.ToString());
-        SignIn(username, password);
+        _repository.AddUser(user);
+        _messageSender.SendMessage(user.ToString());
+        SignIn(user._name, "");
         return true;
 
+    }
+
+    public bool ForgetUser(int id)
+    {
+        var foundUser = _repository.GetUser(id);
+
+        if (foundUser == null) return false;
+
+        _repository.DeleteUser(id);
+        return true;
     }
 
     public IEnumerable<User> GetUsers()
     {
         return _repository.GetUsers();
+    }
+
+    public int GetAccountIdFromGoogleId(string googleId)
+    {
+        return _repository.GetAccountIdFromGoogleId(googleId);
     }
 }
